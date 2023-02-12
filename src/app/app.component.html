@@ -8,3 +8,20 @@
     <button (click)="remove(item)">REMOVER</button>
   </li>
 </ul>
+
+<form [formGroup]="form">
+  <fieldset>
+    <label>Tarefa</label>
+    <input
+      type="text"
+      placeholder="Ex: Estudar Angular"
+      maxlength="60"
+      formControlName="title"
+    />
+    <small *ngIf="form.controls.title.invalid && !form.controls.title.pristine"
+      >A tarefa deve conter no mínimo 3 caracteres, e máximo de 60
+      caracteres</small
+    >
+    <button>Salvar</button>
+  </fieldset>
+</form>
