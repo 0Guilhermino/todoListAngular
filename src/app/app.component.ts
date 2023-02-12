@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AppComponent {
   todos: Todo[] = [];
-  title: string = "minhas tarefas"
+  title: string = "Minhas Tarefas"
   public form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -20,25 +20,48 @@ export class AppComponent {
         Validators.required
       ])]
     });
-    this.todos.push(new Todo(1,"Estudar angular", false))
-    this.todos.push(new Todo(2,"Estudar css", true))
-    this.todos.push(new Todo(3,"Estudar js p front", false))
+    this.loadToLocalStorage();
   }
 
-  alteratexto(){
-    this.title = "Title Modified";
+  create() {
+    const title = this.form.controls['title'].value;
+    const id = this.todos.length + 1;
+    this.todos.push(new Todo(id, title, false));
+    this.saveToLocalStorage();
+    this.clearForm();
   }
 
   remove(todo: Todo) {
     const index = this.todos.indexOf(todo);
-    index != -1 ?  this.todos.splice(index, 1) : console.log("Item não encontrado! impossível remover");
+    index != -1 ?  this.todos.splice(index, 1) : 
+    console.log("Item não encontrado! impossível remover");
+    this.saveToLocalStorage()
   }
+  
 
   markAsDone(todo: Todo) {
     todo.done = true;
+    this.saveToLocalStorage()
   }
 
   markAsUnDone(todo: Todo) {
     todo.done = false;
+    this.saveToLocalStorage()
   }
+
+  clearForm(){
+    this.form.reset()
+  }
+
+  saveToLocalStorage(){
+    const data = JSON.stringify(this.todos);
+    localStorage.setItem('todos', data)
+  }
+
+  loadToLocalStorage(){
+    const dados = localStorage.getItem('todos')
+    this.todos = JSON.parse(dados!);
+  }
+
+
 }
