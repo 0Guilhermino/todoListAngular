@@ -7,19 +7,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-removerItem() {
-throw new Error('Method not implemented.');
-}
   todos: Todo[] = [];
   title: string = "minhas tarefas"
 
   constructor() {
     this.todos.push(new Todo(1,"Estudar angular", false))
-    this.todos.push(new Todo(2,"Estudar css", false))
+    this.todos.push(new Todo(2,"Estudar css", true))
     this.todos.push(new Todo(3,"Estudar js p front", false))
   }
 
   alteratexto(){
     this.title = "Title Modified";
+  }
+
+  remove(todo: Todo) {
+    const index = this.todos.indexOf(todo);
+    index != -1 ?  this.todos.splice(index, 1) : console.log("Item não encontrado! impossível remover");
+  }
+
+  markAsDone(todo: Todo) {
+    todo.done = true;
+  }
+
+  markAsUnDone(todo: Todo) {
+    todo.done = false;
   }
 }

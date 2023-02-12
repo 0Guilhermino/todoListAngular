@@ -2,7 +2,9 @@
 <button (click)="alteratexto()">Modificar título</button>
 <ul>
   <li *ngFor="let item of todos">
-    {{ item.id }} - {{ item.title }} | <button>CONCLUIR</button> |
-    <button>REMOVER</button>
+    {{ item.id }} - {{ item.title }} |
+    <button *ngIf="!item.done" (click)="markAsDone(item)">CONCLUIR</button> |
+    <button *ngIf="item.done" (click)="markAsUnDone(item)">REFAZER</button> |
+    <button (click)="remove(item)">REMOVER</button>
   </li>
 </ul>
